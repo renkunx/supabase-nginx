@@ -14,8 +14,11 @@ COPY nginx.conf.template /etc/nginx/conf.d/
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
-# 设置默认的环境变量
+# 设置默认的 Supabase 项目 ID
 ENV SUPABASE_PROJECT_ID=eerrrudelimaalmqyzhj
+
+# 设置默认的服务器名称
+ENV SERVER_NAME=localhost
 
 # 暴露 80 端口
 EXPOSE 80

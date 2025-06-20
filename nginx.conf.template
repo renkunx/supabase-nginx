@@ -5,7 +5,7 @@ proxy_cache_path /tmp/nginx_cache levels=1:2 keys_zone=supabase_cache:10m max_si
 
 server {
     listen 80;
-    server_name localhost; # 您可以更改为您的域名
+    server_name ${SERVER_NAME};
 
     # 静态文件缓存配置
     location ~ ^/storage/.*\.(jpg|jpeg|png|gif|ico|css|js)$ {

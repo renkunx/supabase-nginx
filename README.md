@@ -44,6 +44,21 @@
 
 ## 使用方法
 
+### Docker 镜像版本控制
+
+为了更好地管理和追踪镜像的变更，我们建议使用版本号来构建和标记 Docker 镜像。这有助于在部署时选择特定版本的镜像，并方便回滚到之前的稳定版本。
+
+**构建带版本号的镜像**
+
+在构建镜像时，您可以使用 `-t` 参数指定镜像名称和版本标签，格式为 `repository:tag`。例如，构建 `1.0.0` 版本的镜像：
+
+```bash
+docker build -t supabase-nginx:1.0.0 .
+```
+
+您可以根据需要更改版本号，例如 `supabase-nginx:1.0.1`、`supabase-nginx:latest` 等。
+
+
 1. 构建 Docker 镜像：
 ```bash
 docker build -t supabase-nginx .
@@ -55,7 +70,10 @@ docker build -t supabase-nginx .
 docker run -p 80:80 supabase-nginx
 
 # 或者指定自己的 Supabase 项目 ID
-docker run -p 80:80 -e SUPABASE_PROJECT_ID=your_project_id supabase-nginx
+docker run -p 80:80 \
+  -e SUPABASE_PROJECT_ID=your_project_id \
+  -e SERVER_NAME=your_domain.com \
+  supabase-nginx:1.0.0
 ```
 
 ## 项目结构
@@ -71,9 +89,8 @@ docker run -p 80:80 -e SUPABASE_PROJECT_ID=your_project_id supabase-nginx
 ## 配置说明
 
 ### 环境变量
-- `SUPABASE_PROJECT_ID`: Supabase 项目 ID
-  - 默认值：eerrrudelimaalmqyzhj
-  - 可在运行容器时通过 `-e` 参数修改
+- `SUPABASE_PROJECT_ID`：您的 Supabase 项目的唯一 ID。默认值为 `eerrrudelimaalmqyzhj`。
+- `SERVER_NAME`：Nginx 监听的服务器域名。默认值为 `localhost`。您可以将其设置为您的实际域名，例如 `example.com`。
 
 ### 配置文件
 项目使用模板化配置管理：
