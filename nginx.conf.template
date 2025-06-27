@@ -13,13 +13,15 @@ server {
         proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
         proxy_cache_valid 200 301 302 1h;
         proxy_cache_valid 404 1m;
-        proxy_cache_key $scheme$request_method$host$request_uri;
-        proxy_ignore_headers Set-Cookie;
+        proxy_cache_key $scheme$proxy_host$request_uri$http_authorization;
+        proxy_ignore_headers Set-Cookie Cache-Control;
         proxy_hide_header Set-Cookie;
-        proxy_cache_bypass $http_pragma;
+        proxy_hide_header Cache-Control;
+        proxy_cache_bypass $http_pragma $http_authorization;
+        proxy_cache_methods GET HEAD;
+        proxy_cache_min_uses 1;
         add_header X-Cache-Status $upstream_cache_status;
-
-        proxy_buffering off;
+        add_header X-Proxy-Cache $upstream_cache_status;
         proxy_pass https://${SUPABASE_PROJECT_ID}.supabase.co;
 
         # 设置代理头部信息

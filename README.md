@@ -11,6 +11,9 @@
   - 缓存大小：10GB
   - 缓存时间：60分钟
   - 缓存键：基于请求方案、方法、主机和URI
+  - 缓存方法：仅缓存 GET 和 HEAD 请求
+  - 缓存控制：忽略上游的 Set-Cookie 和 Cache-Control 头
+  - 缓存状态：通过 X-Cache-Status 和 X-Proxy-Cache 头部指示缓存状态
 
 ### 2. 请求头转发
 - 转发认证相关的请求头：
